@@ -1,3 +1,6 @@
+terraform {
+  backend "azurerm" {}
+}
 resource "azurerm_resource_group" "aci-rg" {
   name     = "aci-vsts"
   location = "West Europe"
