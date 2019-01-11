@@ -1,5 +1,7 @@
 # Terrafomr AKS Project
 
+![alt](https://dev.azure.com/jungopro/Terraform/_apis/build/status/Terraform)
+
 ## General
 
 This projet will deploy AKS in Terraform alongside supporting services with secure access to each service 
