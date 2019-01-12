@@ -1,4 +1,6 @@
-provider "azurerm" {}
+provider "azurerm" {
+  version = "~> 1.21"
+}
 
 terraform {
   backend "azurerm" {}
@@ -21,7 +23,7 @@ module "resource_group" {
 module "storage_account" {
   source                   = "github.com/jungopro/terraform-modules.git?ref=dev/azure/storage_account"
   create_resource          = "${local.create_resource}"
-  name                     = "${local.resource_group_name}-${var.storage_account["name"]}-sa"
+  name                     = "${lower("${var.storage_account["name"]}")}"
   resource_group           = "${local.resource_group_name}"
   location                 = "${var.location}"
   account_tier             = "${var.storage_account["account_tier"]}"

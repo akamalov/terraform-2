@@ -7,7 +7,7 @@ tags = {
 customer = "Azure"
 
 storage_account = {
-  "name" = "default"
+  "name" = "acrsa"
   "account_tier" = "Standard"
   "account_replication_type" = "LRS"
 }
