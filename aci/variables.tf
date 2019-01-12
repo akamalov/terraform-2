@@ -13,3 +13,7 @@ variable "vsts-agent" {
 variable "vsts-pool" {
   default = "ACI-Pool"
 }
+
+variable "image" {
+  description = "docker image name for the agent"
+}

@@ -1,3 +1,12 @@
+provider "azurerm" {
+  version = "~> 1.21"
+}
+
+provider "random" {
+  version = "~> 2.0"
+}
+
+
 terraform {
   backend "azurerm" {}
 }
@@ -41,7 +50,7 @@ resource "azurerm_container_group" "aci-vsts" {
 
   container {
     name   = "vsts-agent"
-    image  = "lenisha/vsts-agent-infrastructure"
+    image  = "${var.image}"
     cpu    = "0.5"
     memory = "1.5"
     port   = "80"
