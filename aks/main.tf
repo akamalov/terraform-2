@@ -7,7 +7,7 @@ terraform {
 }
 
 locals {
-  resource_group_name = "${var.customer}-${terraform.workspace}-rg"   # dynamic build of RG name
+  resource_group_name = "${var.customer}-${terraform.workspace}"      # dynamic build of RG name
   default_secret_name = "${terraform.workspace}-secret"
   create_resource     = "${terraform.workspace == "default" ? 0 : 1}" # condition to prevent creating resources with a "default" terraform workspace
 }
@@ -15,7 +15,7 @@ locals {
 module "resource_group" {
   source              = "github.com/jungopro/terraform-modules.git?ref=dev/azure/resource_group"
   create_resource     = "${local.create_resource}"
-  resource_group_name = "${local.resource_group_name}"
+  resource_group_name = "${local.resource_group_name}-rg"
   location            = "${var.location}"
   tags                = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
 }
@@ -28,5 +28,14 @@ module "storage_account" {
   location                 = "${var.location}"
   account_tier             = "${var.storage_account["account_tier"]}"
   account_replication_type = "${var.storage_account["account_replication_type"]}"
+  tags                     = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
+}
+
+module "container_registry" {
+  source          = "github.com/jungopro/terraform-modules.git?ref=dev/azure/container_registry"
+  create_resource = "${local.create_resource}"
+  name            = "${local.resource_group_name}-acr"
+  location        = "${var.location}"
+  sa_id = "${element("${module.storage_account.*.id}", "${local.create_resource.index}")}"
   tags                     = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
 }

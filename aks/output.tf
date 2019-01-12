@@ -9,3 +9,7 @@ output "resource_group_name" {
 output "storage_account_name" {
   value = "${module.storage_account.name}"
 }
+
+output "container_registry_name" {
+  value = "${module.container_registry.name}"
+}
