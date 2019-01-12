@@ -10,3 +10,7 @@ variable "customer" {
 variable "tags" {
   type = "map"
 }
+
+variable "storage_account" {
+  type = "map"
+}
