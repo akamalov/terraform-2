@@ -1,0 +1,54 @@
+resources:
+- repo: self
+  clean: true
+queue:
+  name: ACI-Pool
+steps:
+- task: DownloadSecureFile@1
+  displayName: 'Download backend configuration'
+  inputs:
+    secureFile: '221b81bb-f730-4d8b-a5cc-8648c881b5b1'
+
+
+- script: |
+   terraform init \
+   -backend-config="$(Agent.TempDirectory)/$BACKEND_CONFIG" \
+   -backend-config="key=$WORKSPACE.tfstate" \
+   -get=true \
+   -upgrade=false
+  workingDirectory: aks
+
+  displayName: Init
+  env:
+    ARM_CLIENT_ID: $ARM-CLIENT-ID
+    ARM_CLIENT_SECRET: $ARM-CLIENT-SECRET
+    ARM_SUBSCRIPTION_ID: $ARM-SUBSCRIPTION-ID
+    ARM_TENANT_ID: $ARM-TENANT-ID
+
+- script: 'terraform workspace select $WORKSPACE'
+  workingDirectory: aks
+
+  displayName: Workspace
+
+- script: 'terraform validate --var-file=$WORKSPACE.tfvars'
+  workingDirectory: aks
+
+  displayName: Validate
+
+- script: 'terraform plan -var-file=$WORKSPACE.tfvars -out=$PLAN_FILE'
+  workingDirectory: aks
+
+  displayName: Plan
+  env:
+    ARM_SUBSCRIPTION_ID: 69f30339-88a2-4736-862c-90fb30a89c9c
+    ARM_CLIENT_ID: 257eed56-d119-411c-9988-4bf0a0d9de64
+    ARM_CLIENT_SECRET: 63ac840d-4a81-47d7-9043-c0f6bf0393bd
+    ARM_TENANT_ID: 20610c94-aa1b-420a-bfc3-7620a57d141d
+
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    targetPath: aks
+
+
+
