@@ -17,3 +17,19 @@ output "container_registry_name" {
 output "vnet_name" {
   value = "${module.vnet.vnet_name}"
 }
+
+output "backend_subnet_name" {
+  value = "${module.backend_subnet.subnet_name}"
+}
+
+output "backend_subnet_address_prefix" {
+  value = "${module.backend_subnet.subnet_address_prefix}"
+}
+
+output "frontend_subnet_name" {
+  value = "${module.frontend_subnet.subnet_name}"
+}
+
+output "frontend_subnet_address_prefix" {
+  value = "${module.frontend_subnet.subnet_address_prefix}"
+}
