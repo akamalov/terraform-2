@@ -13,4 +13,7 @@ variable "tags" {
 
 variable "storage_account" {
   type = "map"
+  default = {
+    "name" = ""
+  }
 }
