@@ -48,7 +48,7 @@ module "container_registry" {
   source          = "github.com/jungopro/terraform-modules.git?ref=dev/azure/container_registry"
   create_resource = "${local.create_resource}"
   name            = "${replace("${local.resource_group_name}acr", "-", "")}"
-  resource_group  = "${local.resource_group_name}"
+  resource_group  = "${module.resource_group.resource_group_name}"
   location        = "${var.location}"
   sa_id           = "${element("${module.storage_account.id}", 0)}"
   tags            = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
@@ -84,5 +84,3 @@ module "frontend_subnet" {
   vnet_name         = "${module.vnet.vnet_name}"
   service_endpoints = "${var.frontend_endpoints}"
 }
-
-# sample comment to force pr
