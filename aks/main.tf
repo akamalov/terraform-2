@@ -11,7 +11,7 @@ terraform {
 }
 
 locals {
-  resource_group_name = "${var.customer}-${terraform.workspace}"   # dynamic build of RG name
+  resource_group_name = "${var.customer}-${terraform.workspace}"      # dynamic build of RG name
   default_secret_name = "${terraform.workspace}-secret"
   create_resource     = "${terraform.workspace == "default" ? 0 : 1}" # condition to prevent creating resources with a "default" terraform workspace
 }
@@ -48,8 +48,18 @@ module "container_registry" {
   source          = "github.com/jungopro/terraform-modules.git?ref=dev/azure/container_registry"
   create_resource = "${local.create_resource}"
   name            = "${replace("${local.resource_group_name}acr", "-", "")}"
-  resource_group  = "${local.resource_group_name}"
+  resource_group  = "${module.resource_group.resource_group_name}"
   location        = "${var.location}"
   sa_id           = "${element("${module.storage_account.id}", 0)}"
   tags            = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
+}
+
+module "vnet" {
+  source              = "github.com/jungopro/terraform-modules.git?ref=dev/azure/vnet"
+  create_resource     = "${local.create_resource}"
+  name                = "${module.resource_group.resource_group_name}-primary-vnet"
+  resource_group_name = "${module.resource_group.resource_group_name}"
+  cidr                = "${var.vnet_cidr}"
+  location            = "${var.location}"
+  tags                = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
 }

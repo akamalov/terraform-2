@@ -1,6 +1,6 @@
 variable "location" {
   description = "The default Azure region for the resource provisioning"
-  default = "West Europe"
+  default     = "West Europe"
 }
 
 variable "customer" {
@@ -13,7 +13,12 @@ variable "tags" {
 
 variable "storage_account" {
   type = "map"
+
   default = {
     "name" = ""
   }
+}
+
+variable "vnet_cidr" {
+  description = "The vnet CIDR in classful format"
 }

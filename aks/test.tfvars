@@ -11,5 +11,4 @@ storage_account = {
   "account_replication_type" = "LRS"
 }
 
-
-# sample comment
+vnet_cidr = "172.16.0.0/16"

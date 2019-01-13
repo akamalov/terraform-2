@@ -13,3 +13,7 @@ output "storage_account_name" {
 output "container_registry_name" {
   value = "${module.container_registry.name}"
 }
+
+output "vnet_name" {
+  value = "${module.vnet.vnet_name}"
+}
