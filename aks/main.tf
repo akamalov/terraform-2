@@ -2,6 +2,10 @@ provider "azurerm" {
   version = "~> 1.21"
 }
 
+provider "random" {
+  version = "~> 2.0"
+}
+
 terraform {
   backend "azurerm" {}
 }
@@ -20,10 +24,19 @@ module "resource_group" {
   tags                = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
 }
 
+resource "random_id" "randomId_sa" {
+  keepers = {
+    # Generate a new ID only when a new resource group is defined
+    resource_group = "${module.resource_group.resource_group_name}"
+  }
+
+  byte_length = 8
+}
+
 module "storage_account" {
   source                   = "github.com/jungopro/terraform-modules.git?ref=dev/azure/storage_account"
   create_resource          = "${local.create_resource}"
-  name                     = "${lower("${var.storage_account["name"]}")}"
+  name                     = "${var.storage_account["name"] != "" ? "${lower("${replace("${var.storage_account["name"]}", "-", "")}")}" : "sa${random_id.randomId_sa.hex}" }"
   resource_group           = "${module.resource_group.resource_group_name}"
   location                 = "${var.location}"
   account_tier             = "${var.storage_account["account_tier"]}"
