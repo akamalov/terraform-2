@@ -10,3 +10,5 @@ storage_account = {
   "account_tier" = "Standard"
   "account_replication_type" = "LRS"
 }
+
+// comment for testing
