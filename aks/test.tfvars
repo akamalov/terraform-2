@@ -12,11 +12,3 @@ storage_account = {
 }
 
 vnet_cidr = "172.16.0.0/16"
-
-backend_address_prefix = "172.16.10.0/24"
-
-backend_endpoints = ["Microsoft.KeyVault","Microsoft.Storage"]
-
-frontend_address_prefix = "172.16.20.0/24"
-
-frontend_endpoints = ["Microsoft.KeyVault","Microsoft.Storage"]
