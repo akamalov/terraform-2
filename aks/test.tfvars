@@ -20,3 +20,5 @@ backend_endpoints = ["Microsoft.KeyVault","Microsoft.Storage"]
 frontend_address_prefix = "172.16.20.0/24"
 
 frontend_endpoints = ["Microsoft.KeyVault","Microsoft.Storage"]
+
+key_vault_readers_group = "kv-readers"

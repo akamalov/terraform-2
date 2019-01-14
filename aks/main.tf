@@ -6,6 +6,11 @@ provider "random" {
   version = "~> 2.0"
 }
 
+provider "null" {
+  version = "~> 1.0"
+}
+
+
 terraform {
   backend "azurerm" {}
 }
@@ -83,4 +88,14 @@ module "frontend_subnet" {
   address_prefix    = "${var.frontend_address_prefix}"
   vnet_name         = "${module.vnet.vnet_name}"
   service_endpoints = "${var.frontend_endpoints}"
+}
+
+## Create group in Azure that will be granted access to Key Vault. Currently there is no API for creating it directly via terraform so using local az cli command instead
+data "azurerm_subscription" "current" {}
+
+resource "null_resource" "create-ad-group_script" {
+  provisioner "local-exec" {
+    command = "az ad group create --display-name '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' --mail-nickname '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' --subscription '${data.azurerm_subscription.current.display_name}' -o json | grep 'displayName'" 
+    interpreter = ["/bin/bash", "-c"]
+  }
 }

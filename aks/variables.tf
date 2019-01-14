@@ -41,3 +41,7 @@ variable "frontend_endpoints" {
   type = "list"
   default = []
 }
+
+variable "key_vault_readers_group" {
+  description = "Name of the group to create in AAD that will be granted read access to the key vault"
+}
