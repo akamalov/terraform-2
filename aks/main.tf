@@ -95,7 +95,11 @@ data "azurerm_subscription" "current" {}
 
 resource "null_resource" "create-ad-group_script" {
   provisioner "local-exec" {
-    command = "az ad group create --display-name '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' --mail-nickname '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' --subscription '${data.azurerm_subscription.current.display_name}' -o json" 
+    command = "chmod +x ./CreateADGroup.sh; ./CreateADGroup.sh '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' '${data.azurerm_subscription.current.display_name}'"
     interpreter = ["/bin/bash", "-c"]
   }
+}
+
+output "manual_cleanup" {
+  value = "please make sure to manually delete ${module.resource_group.resource_group_name}-${var.key_vault_readers_group} ad group if you need to destroy the environment"
 }
