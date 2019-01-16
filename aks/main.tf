@@ -95,7 +95,7 @@ data "azurerm_subscription" "current" {}
 
 resource "null_resource" "create-ad-group_script" {
   provisioner "local-exec" {
-    command = "az ad group create --display-name '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' --mail-nickname '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' --subscription '${data.azurerm_subscription.current.display_name}' -o json | grep 'displayName'" 
+    command = "az ad group create --display-name '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' --mail-nickname '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' --subscription '${data.azurerm_subscription.current.display_name}' -o json" 
     interpreter = ["/bin/bash", "-c"]
   }
 }
