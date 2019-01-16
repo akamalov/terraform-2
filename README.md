@@ -15,7 +15,7 @@ In addition, it will configure the client machine to securely authenticate to AK
 - Azure Key Vault
   - Grant "read" access to the AD group using KV policy
 - Azure SPN (azurerm_azuread_application + azurerm_azuread_service_principle)
-- Azure AD Group
+- Azure AD Group [doesn't exist today](https://github.com/terraform-providers/terraform-provider-azurerm/issues/1151)
   - Assing SPN to the AD group
 - Azure AKS
 - Helm
@@ -23,3 +23,6 @@ In addition, it will configure the client machine to securely authenticate to AK
 - Helm istio sample app chart
 - Helm Jenkins X chart
 - Helm Spinnaker chart
+
+
+![alt](https://img.shields.io/github/release/jungopro/terraform.svg)
