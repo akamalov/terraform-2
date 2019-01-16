@@ -1,4 +1,4 @@
-# Terrafomr AKS Project
+# Terraform AKS Project
 
 ![alt](https://dev.azure.com/jungopro/Terraform/_apis/build/status/Terraform) ![alt](https://vsrm.dev.azure.com/jungopro/_apis/public/Release/badge/2d4b16f3-b3f8-4c2a-90d1-b25057964e1a/1/1)
 
