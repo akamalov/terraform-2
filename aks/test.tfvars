@@ -1,5 +1,5 @@
 tags = {
-    maintaner = "Omer Barel"
+    maintainer = "Omer Barel"
     environment = "test"
 }
 
