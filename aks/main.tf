@@ -83,7 +83,7 @@ data "azurerm_subscription" "current" {}
 
 resource "null_resource" "create-ad-group_script" {
   provisioner "local-exec" {
-    command     = "chmod +x ../scripts/createADGroup.sh; ../scripts/createADGroup.sh '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' '${data.azurerm_subscription.current.display_name}'"
+    command     = "chmod +x scripts/createADGroup.sh; scripts/createADGroup.sh '${module.resource_group.resource_group_name}-${var.key_vault_readers_group}' '${data.azurerm_subscription.current.display_name}'"
     interpreter = ["/bin/bash", "-c"]
   }
 }
