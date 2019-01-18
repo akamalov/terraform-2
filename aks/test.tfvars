@@ -1,10 +1,9 @@
 tags = {
     maintaner = "Omer Barel"
     environment = "test"
-    customer = "azure"
 }
 
-customer = "azure"
+customer = "omer"
 
 storage_account = {
   "account_tier" = "Standard"
