@@ -93,3 +93,11 @@ module "key_vault" {
   enabled_for_template_deployment = "${var.key_vault_enabled_for_template_deployment}"
   tags                            = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
 }
+
+module "key_vault_access_policy" {
+  source = "github.com/jungopro/terraform-modules.git?ref=dev/azure/key_vault_access_policy"
+  vault_name = "${element("${module.key_vault.name}", 0)}"
+  resource_group                  = "${element("${module.resource_group.resource_group_name}", 0)}"
+  tenant_id                       = "${data.azurerm_client_config.current.tenant_id}"
+  object_id = "d5ae059c-40d6-43fe-8333-5852bb4bde04"
+}

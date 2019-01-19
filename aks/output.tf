@@ -33,3 +33,7 @@ output "frontend_subnet_name" {
 output "frontend_subnet_address_prefix" {
   value = "${module.frontend_subnet.subnet_address_prefix}"
 }
+
+output "key_vault_name" {
+  value = "${module.key_vault.name}"
+}
