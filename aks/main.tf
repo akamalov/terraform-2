@@ -20,6 +20,8 @@ locals {
   create_resource     = "${terraform.workspace == "default" ? 0 : 1}" # condition to prevent creating resources with a "default" terraform workspace
 }
 
+data "azurerm_client_config" "current" {}
+
 module "resource_group" {
   source              = "github.com/jungopro/terraform-modules.git?ref=dev/azure/resource_group"
   count               = "${local.create_resource}"
@@ -76,4 +78,18 @@ module "frontend_subnet" {
   address_prefix    = "${var.frontend_address_prefix}"
   vnet_name         = "${element("${module.vnet.vnet_name}",0)}"
   service_endpoints = "${var.frontend_endpoints}"
+}
+
+module "key_vault" {
+  source                          = "github.com/jungopro/terraform-modules.git?ref=dev/azure/key_vault"
+  count                           = "${local.create_resource}"
+  name                            = "${element("${module.resource_group.resource_group_name}", 0)}-kv"
+  location                        = "${var.location}"
+  resource_group                  = "${element("${module.resource_group.resource_group_name}", 0)}"
+  sku_name                        = "${var.key_vault_sku_name}"
+  tenant_id                       = "${data.azurerm_client_config.current.tenant_id}"
+  enabled_for_deployment          = "${var.key_vault_enabled_for_deployment}"
+  enabled_for_disk_encryption     = "${var.key_vault_enabled_for_disk_encryption}"
+  enabled_for_template_deployment = "${var.key_vault_enabled_for_template_deployment}"
+  tags                            = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
 }

@@ -1,6 +1,6 @@
 tags = {
     maintainer = "Omer Barel"
-    environment = "test"
+    environment = "sandbox"
 }
 
 customer = "omer"
@@ -20,4 +20,8 @@ frontend_address_prefix = "172.16.20.0/24"
 
 frontend_endpoints = ["Microsoft.KeyVault","Microsoft.Storage"]
 
-key_vault_readers_group = "kv-readers"
+key_vault_enabled_for_deployment = true
+
+key_vault_enabled_for_disk_encryption = true
+
+key_vault_enabled_for_template_deployment = true

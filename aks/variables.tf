@@ -42,6 +42,22 @@ variable "frontend_endpoints" {
   default = []
 }
 
-variable "key_vault_readers_group" {
-  description = "Name of the group to create in AAD that will be granted read access to the key vault"
+variable "key_vault_sku_name" {
+  description = "The Name of the SKU used for this Key Vault. Possible values are Standard and Premium"
+  default = "standard"
+}
+
+variable "key_vault_enabled_for_deployment" {
+  description = "Boolean flag to specify whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault"
+  default = false
+}
+
+variable "key_vault_enabled_for_disk_encryption" {
+  description = "Boolean flag to specify whether Azure Disk Encryption is permitted to retrieve secrets from the vault and unwrap keys"
+  default = false
+}
+
+variable "key_vault_enabled_for_template_deployment" {
+  description = "Boolean flag to specify whether Azure Resource Manager is permitted to retrieve secrets from the key vault"
+  default = false
 }
