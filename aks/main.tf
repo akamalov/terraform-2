@@ -83,13 +83,13 @@ module "frontend_subnet" {
 module "key_vault" {
   source                          = "github.com/jungopro/terraform-modules.git?ref=dev/azure/key_vault"
   count                           = "${local.create_resource}"
-  name                            = "${element("${module.vnet.vnet_name}",0)}-key-vault"
+  name                            = "${element("${module.resource_group.resource_group_name}", 0)}-key-vault"
   location                        = "${var.location}"
   resource_group                  = "${element("${module.resource_group.resource_group_name}", 0)}"
-  sku_name                        = "Standard"
+  sku_name                        = "${var.key_vault_sku_name}"
   tenant_id                       = "${data.azurerm_client_config.current.tenant_id}"
-  enabled_for_deployment          = true
-  enabled_for_disk_encryption     = true
-  enabled_for_template_deployment = true
+  enabled_for_deployment          = "${var.key_vault_enabled_for_deployment}"
+  enabled_for_disk_encryption     = "${var.key_vault_enabled_for_disk_encryption}"
+  enabled_for_template_deployment = "${var.key_vault_enabled_for_template_deployment}"
   tags                            = "${merge("${var.tags}", map("terraform workspace", "${terraform.workspace}"), map("customer", "${var.customer}"))}"
 }
