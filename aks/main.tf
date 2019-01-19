@@ -83,7 +83,7 @@ module "frontend_subnet" {
 module "key_vault" {
   source                          = "github.com/jungopro/terraform-modules.git?ref=dev/azure/key_vault"
   count                           = "${local.create_resource}"
-  name                            = "${element("${module.resource_group.resource_group_name}", 0)}-key-vault"
+  name                            = "${element("${module.resource_group.resource_group_name}", 0)}-kv"
   location                        = "${var.location}"
   resource_group                  = "${element("${module.resource_group.resource_group_name}", 0)}"
   sku_name                        = "${var.key_vault_sku_name}"
