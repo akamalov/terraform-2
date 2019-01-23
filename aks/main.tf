@@ -32,7 +32,7 @@ module "resource_group" {
 
 module "storage_account" {
   source                   = "github.com/jungopro/terraform-modules.git?ref=dev/azure/storage_account"
-  count                    = 1
+  count                    = "${local.create_resource}"
   resource_group           = "${element("${module.resource_group.resource_group_name}", 0)}"
   location                 = "${var.location}"
   account_tier             = "${var.storage_account["account_tier"]}"
