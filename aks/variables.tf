@@ -61,3 +61,26 @@ variable "key_vault_enabled_for_template_deployment" {
   description = "Boolean flag to specify whether Azure Resource Manager is permitted to retrieve secrets from the key vault"
   default = false
 }
+
+## aks variables
+
+/*variable "aks_admin_username" {
+  description = "(Required) The Admin Username for the Cluster. Changing this forces a new resource to be created."
+  default = "admin"
+}
+
+variable "aks_key_data" {
+  description = "The Public SSH Key used to access the cluster. Changing this forces a new resource to be created."
+}
+
+variable "aks_vm_size" {
+  description = "The size of each VM in the Agent Pool (e.g. Standard_F1). Changing this forces a new resource to be created"
+}
+
+variable "aks_os_disk_size" {
+  description = "The Agent Operating System disk size in GB. Changing this forces a new resource to be created"
+}
+
+variable "max_pods" {
+  description = "The maximum number of pods that can run on each agent"
+}*/

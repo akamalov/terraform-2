@@ -18,6 +18,7 @@ In addition, it will configure the client machine to securely authenticate to AK
 - Azure AD Group [doesn't exist today](https://github.com/terraform-providers/terraform-provider-azurerm/issues/1151)
   - Assing SPN to the AD group
 - Azure AKS
+  - AD Authentication
 - Helm
 - Helm istio chart
 - Helm istio sample app chart

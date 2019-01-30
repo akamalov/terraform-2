@@ -95,13 +95,33 @@ module "key_vault" {
 }
 
 module "key_vault_access_policy" {
-  source = "github.com/jungopro/terraform-modules.git?ref=dev/azure/key_vault_access_policy"
-  vault_name = "${element("${module.key_vault.name}", 0)}"
-  resource_group                  = "${element("${module.resource_group.resource_group_name}", 0)}"
-  tenant_id                       = "${data.azurerm_client_config.current.tenant_id}"
-  object_id = "d5ae059c-40d6-43fe-8333-5852bb4bde04"
+  source         = "github.com/jungopro/terraform-modules.git?ref=dev/azure/key_vault_access_policy"
+  vault_name     = "${element("${module.key_vault.name}", 0)}"
+  resource_group = "${element("${module.resource_group.resource_group_name}", 0)}"
+  tenant_id      = "${data.azurerm_client_config.current.tenant_id}"
+  object_id      = "d5ae059c-40d6-43fe-8333-5852bb4bde04"
+
   certificate_permissions = [
     "get",
     "list",
   ]
 }
+
+module "aks_ad_application" {
+  source = "github.com/jungopro/terraform-modules.git?ref=dev/azure/ad_application"
+  name = "${element("${module.resource_group.resource_group_name}", 0)}-aks-app"
+}
+
+
+/*module "aks" {
+  source         = "github.com/jungopro/terraform-modules.git?ref=dev/azure/aks"
+  count          = "${local.create_resource}"
+  ame            = "${element("${module.resource_group.resource_group_name}", 0)}-aks"
+  location       = "${var.location}"
+  resource_group = "${element("${module.resource_group.resource_group_name}", 0)}"
+  admin_username = "${var.aks_admin_username}"
+  key_data = "${var.aks_key_data}"
+  vm_size = "${var.aks_vm_size}"
+  os_disk_size = "${var.aks_os_disk_size}"
+  max_pods = "${var.max_pods}"
+}*/
