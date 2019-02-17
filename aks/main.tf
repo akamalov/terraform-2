@@ -116,7 +116,7 @@ module "aks_ad_application" {
 /*module "aks" {
   source         = "github.com/jungopro/terraform-modules.git?ref=dev/azure/aks"
   count          = "${local.create_resource}"
-  ame            = "${element("${module.resource_group.resource_group_name}", 0)}-aks"
+  name            = "${element("${module.resource_group.resource_group_name}", 0)}-aks"
   location       = "${var.location}"
   resource_group = "${element("${module.resource_group.resource_group_name}", 0)}"
   admin_username = "${var.aks_admin_username}"
